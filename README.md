@@ -4,7 +4,6 @@ Simple airdrop script for solana tokens
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (version 16 or higher)
 - A Solana wallet with a private key
 - Access to a Solana RPC provider
 - A csv or a json file with recipient addresses in it.
@@ -29,7 +28,8 @@ Simple airdrop script for solana tokens
 Example `.env`:
 ```ini
 PRIVATE_KEY=yourSolWalletsPrivateKeyString
-RPC_ENDPOINT=https://summer-omniscient-gadget.solana-mainnet.quiknode.pro/apiKey
+RPC_ENDPOINT_0=https://rpc0
+RPC_ENDPOINT_1=https://rpc1
 ```
 
 #### Airdrop parameters (.env.config)
@@ -40,6 +40,7 @@ TOKEN_MINT_ADDRESS=HAWKThXRcNL9ZGZKqgUXLm4W8tnRZ7U6MVdEepSutj34
 AMOUNT=100000
 FILE_TYPE=csv # or json
 FILE_PATH=addresses.csv # or addresses.json
+GENERATE_WALLETS_AMOUNT=300 # amount of wallets to generate
 ```
 
 Example `addresses.json`:
@@ -53,13 +54,20 @@ Example `addresses.json`:
 
 Example `addresses.csv`:
 ```csv
-address
 address1
 address2
 address3
 ```
 
 ### Usage
+
+1. Generate wallets(optional)
+
+```bash
+ts-node src/genWallets.ts
+```
+
+2. Airdrop
 
 ```bash
 ts-node src/airdrop.ts

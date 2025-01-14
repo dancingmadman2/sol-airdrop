@@ -4,4 +4,5 @@
 /package-lock.json
 /addresses.csv
 /addresses.json
+/solana_addresses.csv
 .DS_Store

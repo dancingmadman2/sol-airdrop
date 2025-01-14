@@ -38,11 +38,17 @@ export class FileReader {
 
   private static parseCsv(content: string): Recipient[] {
     const records = parse(content, {
-      columns: true,
-      skip_empty_lines: true
+      columns: false,
+      skip_empty_lines: true,
+      trim: true
     });
-    this.validateRecipients(records);
-    return records;
+
+    const recipients = records.map((record: string[]) => ({
+      address: record[0]
+    }));
+
+    this.validateRecipients(recipients);
+    return recipients;
   }
 
   private static validateRecipients(recipients: any[]): void {
@@ -53,6 +59,9 @@ export class FileReader {
     recipients.forEach((recipient, index) => {
       if (!recipient.address) {
         throw new Error(`Missing address for recipient at index ${index}`);
+      }
+      if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(recipient.address)) {
+        throw new Error(`Invalid Solana address format at index ${index}: ${recipient.address}`);
       }
     });
   }
